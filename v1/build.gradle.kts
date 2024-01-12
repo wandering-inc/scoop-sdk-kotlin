@@ -35,6 +35,12 @@ android {
     kotlin {
         jvmToolchain(17)
     }
+
+    defaultConfig {
+        minSdk = 24
+    }
+
+    compileSdk = 34
 }
 
 mavenPublishing {
