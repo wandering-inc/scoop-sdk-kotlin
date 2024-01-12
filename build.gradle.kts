@@ -4,6 +4,10 @@ buildscript {
         google()
         mavenCentral()
     }
+
+    dependencies {
+        classpath(libs.maven.publish.plugin)
+    }
 }
 
 plugins {

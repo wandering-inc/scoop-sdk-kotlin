@@ -1,7 +1,10 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.serialization)
     id("com.android.library")
+    id("com.vanniktech.maven.publish")
 }
 
 kotlin {
@@ -28,4 +31,13 @@ kotlin {
 
 android {
     namespace = "ai.wandering.scoop.v1"
+
+    kotlin {
+        jvmToolchain(17)
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.S01)
+    signAllPublications()
 }
