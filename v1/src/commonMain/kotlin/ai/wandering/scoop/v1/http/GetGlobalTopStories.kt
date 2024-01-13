@@ -1,9 +1,10 @@
 package ai.wandering.scoop.v1.http
 
-import ai.wandering.scoop.v1.models.Story
+import ai.wandering.scoop.v1.models.GetGlobalTopStoriesArgs
+import ai.wandering.scoop.v1.models.GetGlobalTopStoriesResponse
 
 
 interface GetGlobalTopStories {
-    operator fun invoke(): List<Story>
+    suspend operator fun invoke(args: GetGlobalTopStoriesArgs): GetGlobalTopStoriesResponse
 }
 

@@ -3,70 +3,6 @@
 package ai.wandering.scoop.v1.models
 
 @pbandk.Export
-public sealed class CursorDirection(override val value: Int, override val name: String? = null) : pbandk.Message.Enum {
-    override fun equals(other: kotlin.Any?): Boolean = other is CursorDirection && other.value == value
-    override fun hashCode(): Int = value.hashCode()
-    override fun toString(): String = "CursorDirection.${name ?: "UNRECOGNIZED"}(value=$value)"
-
-    public object NEWER : CursorDirection(0, "NEWER")
-    public object OLDER : CursorDirection(1, "OLDER")
-    public class UNRECOGNIZED(value: Int) : CursorDirection(value)
-
-    public companion object : pbandk.Message.Enum.Companion<CursorDirection> {
-        public val values: List<CursorDirection> by lazy { listOf(NEWER, OLDER) }
-        override fun fromValue(value: Int): CursorDirection = values.firstOrNull { it.value == value } ?: UNRECOGNIZED(value)
-        override fun fromName(name: String): CursorDirection = values.firstOrNull { it.name == name } ?: throw IllegalArgumentException("No CursorDirection with name: $name")
-    }
-}
-
-@pbandk.Export
-public data class Cursor(
-    val id: String = "",
-    val timestamp: Long = 0L,
-    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
-) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.Cursor = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.Cursor> get() = Companion.descriptor
-    override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<ai.wandering.scoop.v1.models.Cursor> {
-        public val defaultInstance: ai.wandering.scoop.v1.models.Cursor by lazy { ai.wandering.scoop.v1.models.Cursor() }
-        override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.Cursor = ai.wandering.scoop.v1.models.Cursor.decodeWithImpl(u)
-
-        override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.Cursor> by lazy {
-            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.Cursor, *>>(2)
-            fieldsList.apply {
-                add(
-                    pbandk.FieldDescriptor(
-                        messageDescriptor = this@Companion::descriptor,
-                        name = "id",
-                        number = 1,
-                        type = pbandk.FieldDescriptor.Type.Primitive.String(),
-                        jsonName = "id",
-                        value = ai.wandering.scoop.v1.models.Cursor::id
-                    )
-                )
-                add(
-                    pbandk.FieldDescriptor(
-                        messageDescriptor = this@Companion::descriptor,
-                        name = "timestamp",
-                        number = 2,
-                        type = pbandk.FieldDescriptor.Type.Primitive.Int64(),
-                        jsonName = "timestamp",
-                        value = ai.wandering.scoop.v1.models.Cursor::timestamp
-                    )
-                )
-            }
-            pbandk.MessageDescriptor(
-                fullName = "ai.wandering.scoop.v1.models.Cursor",
-                messageClass = ai.wandering.scoop.v1.models.Cursor::class,
-                messageCompanion = this,
-                fields = fieldsList
-            )
-        }
-    }
-}
-
-@pbandk.Export
 public data class FeedMetadata(
     val cursor: ai.wandering.scoop.v1.models.Cursor? = null,
     val totalCount: Int = 0,
@@ -711,28 +647,61 @@ public data class Feed(
 }
 
 @pbandk.Export
-@pbandk.JsName("orDefaultForCursor")
-public fun Cursor?.orDefault(): ai.wandering.scoop.v1.models.Cursor = this ?: Cursor.defaultInstance
+public data class GetFeedArgs(
+    val count: Int = 0,
+    val direction: ai.wandering.scoop.v1.models.CursorDirection = ai.wandering.scoop.v1.models.CursorDirection.fromValue(0),
+    val cursor: ai.wandering.scoop.v1.models.Cursor? = null,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+    override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.GetFeedArgs = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetFeedArgs> get() = Companion.descriptor
+    override val protoSize: Int by lazy { super.protoSize }
+    public companion object : pbandk.Message.Companion<ai.wandering.scoop.v1.models.GetFeedArgs> {
+        public val defaultInstance: ai.wandering.scoop.v1.models.GetFeedArgs by lazy { ai.wandering.scoop.v1.models.GetFeedArgs() }
+        override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.GetFeedArgs = ai.wandering.scoop.v1.models.GetFeedArgs.decodeWithImpl(u)
 
-private fun Cursor.protoMergeImpl(plus: pbandk.Message?): Cursor = (plus as? Cursor)?.let {
-    it.copy(
-        unknownFields = unknownFields + plus.unknownFields
-    )
-} ?: this
-
-@Suppress("UNCHECKED_CAST")
-private fun Cursor.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Cursor {
-    var id = ""
-    var timestamp = 0L
-
-    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
-        when (_fieldNumber) {
-            1 -> id = _fieldValue as String
-            2 -> timestamp = _fieldValue as Long
+        override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetFeedArgs> by lazy {
+            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.GetFeedArgs, *>>(3)
+            fieldsList.apply {
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "count",
+                        number = 1,
+                        type = pbandk.FieldDescriptor.Type.Primitive.Int32(),
+                        jsonName = "count",
+                        value = ai.wandering.scoop.v1.models.GetFeedArgs::count
+                    )
+                )
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "direction",
+                        number = 2,
+                        type = pbandk.FieldDescriptor.Type.Enum(enumCompanion = ai.wandering.scoop.v1.models.CursorDirection.Companion),
+                        jsonName = "direction",
+                        value = ai.wandering.scoop.v1.models.GetFeedArgs::direction
+                    )
+                )
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "cursor",
+                        number = 3,
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.Cursor.Companion),
+                        jsonName = "cursor",
+                        value = ai.wandering.scoop.v1.models.GetFeedArgs::cursor
+                    )
+                )
+            }
+            pbandk.MessageDescriptor(
+                fullName = "ai.wandering.scoop.v1.models.GetFeedArgs",
+                messageClass = ai.wandering.scoop.v1.models.GetFeedArgs::class,
+                messageCompanion = this,
+                fields = fieldsList
+            )
         }
     }
-
-    return Cursor(id, timestamp, unknownFields)
 }
 
 @pbandk.Export
@@ -1037,4 +1006,32 @@ private fun Feed.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Feed {
     }
 
     return Feed(pbandk.ListWithSize.Builder.fixed(modules), metadata, unknownFields)
+}
+
+@pbandk.Export
+@pbandk.JsName("orDefaultForGetFeedArgs")
+public fun GetFeedArgs?.orDefault(): ai.wandering.scoop.v1.models.GetFeedArgs = this ?: GetFeedArgs.defaultInstance
+
+private fun GetFeedArgs.protoMergeImpl(plus: pbandk.Message?): GetFeedArgs = (plus as? GetFeedArgs)?.let {
+    it.copy(
+        cursor = cursor?.plus(plus.cursor) ?: plus.cursor,
+        unknownFields = unknownFields + plus.unknownFields
+    )
+} ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun GetFeedArgs.Companion.decodeWithImpl(u: pbandk.MessageDecoder): GetFeedArgs {
+    var count = 0
+    var direction: ai.wandering.scoop.v1.models.CursorDirection = ai.wandering.scoop.v1.models.CursorDirection.fromValue(0)
+    var cursor: ai.wandering.scoop.v1.models.Cursor? = null
+
+    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+            1 -> count = _fieldValue as Int
+            2 -> direction = _fieldValue as ai.wandering.scoop.v1.models.CursorDirection
+            3 -> cursor = _fieldValue as ai.wandering.scoop.v1.models.Cursor
+        }
+    }
+
+    return GetFeedArgs(count, direction, cursor, unknownFields)
 }

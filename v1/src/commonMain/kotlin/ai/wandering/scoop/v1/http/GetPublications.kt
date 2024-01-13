@@ -1,7 +1,8 @@
 package ai.wandering.scoop.v1.http
 
-import ai.wandering.scoop.v1.models.Publication
+import ai.wandering.scoop.v1.models.GetPublicationsArgs
+import ai.wandering.scoop.v1.models.GetPublicationsResponse
 
 interface GetPublications {
-    operator fun invoke(): List<Publication>
+    suspend operator fun invoke(args: GetPublicationsArgs): GetPublicationsResponse
 }
