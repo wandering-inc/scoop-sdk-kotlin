@@ -10,7 +10,7 @@ import ai.wandering.scoop.v1.http.impl.RealGetUSTopStories
 import io.ktor.client.*
 
 internal class RealScoopClient(httpClient: HttpClient, bearerToken: String) : ScoopClient {
-    override val getGlobalTopStories: GetGlobalTopStories = RealGetGlobalTopStories(httpClient)
-    override val getUSTopStories: GetUSTopStories = RealGetUSTopStories(httpClient)
-    override val getPublications: GetPublications = RealGetPublications(httpClient)
+    override val getGlobalTopStories: GetGlobalTopStories = RealGetGlobalTopStories(httpClient, bearerToken)
+    override val getUSTopStories: GetUSTopStories = RealGetUSTopStories(httpClient, bearerToken)
+    override val getPublications: GetPublications = RealGetPublications(httpClient, bearerToken)
 }
