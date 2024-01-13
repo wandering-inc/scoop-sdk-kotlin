@@ -108,54 +108,18 @@ public data class GetUSTopStoriesData(
 }
 
 @pbandk.Export
-public data class GetUSTopStoriesError(
-    val message: String = "",
-    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
-) : pbandk.Message {
-    override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.GetUSTopStoriesError = protoMergeImpl(other)
-    override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetUSTopStoriesError> get() = Companion.descriptor
-    override val protoSize: Int by lazy { super.protoSize }
-    public companion object : pbandk.Message.Companion<ai.wandering.scoop.v1.models.GetUSTopStoriesError> {
-        public val defaultInstance: ai.wandering.scoop.v1.models.GetUSTopStoriesError by lazy { ai.wandering.scoop.v1.models.GetUSTopStoriesError() }
-        override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.GetUSTopStoriesError = ai.wandering.scoop.v1.models.GetUSTopStoriesError.decodeWithImpl(u)
-
-        override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetUSTopStoriesError> by lazy {
-            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.GetUSTopStoriesError, *>>(1)
-            fieldsList.apply {
-                add(
-                    pbandk.FieldDescriptor(
-                        messageDescriptor = this@Companion::descriptor,
-                        name = "message",
-                        number = 1,
-                        type = pbandk.FieldDescriptor.Type.Primitive.String(),
-                        jsonName = "message",
-                        value = ai.wandering.scoop.v1.models.GetUSTopStoriesError::message
-                    )
-                )
-            }
-            pbandk.MessageDescriptor(
-                fullName = "ai.wandering.scoop.v1.models.GetUSTopStoriesError",
-                messageClass = ai.wandering.scoop.v1.models.GetUSTopStoriesError::class,
-                messageCompanion = this,
-                fields = fieldsList
-            )
-        }
-    }
-}
-
-@pbandk.Export
 public data class GetUSTopStoriesResponse(
     val type: Type<*>? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
     public sealed class Type<V>(value: V) : pbandk.Message.OneOf<V>(value) {
         public class Data(data: ai.wandering.scoop.v1.models.GetUSTopStoriesData) : Type<ai.wandering.scoop.v1.models.GetUSTopStoriesData>(data)
-        public class Error(error: ai.wandering.scoop.v1.models.GetUSTopStoriesError) : Type<ai.wandering.scoop.v1.models.GetUSTopStoriesError>(error)
+        public class Error(error: ai.wandering.scoop.v1.models.ScoopError) : Type<ai.wandering.scoop.v1.models.ScoopError>(error)
     }
 
     val data: ai.wandering.scoop.v1.models.GetUSTopStoriesData?
         get() = (type as? Type.Data)?.value
-    val error: ai.wandering.scoop.v1.models.GetUSTopStoriesError?
+    val error: ai.wandering.scoop.v1.models.ScoopError?
         get() = (type as? Type.Error)?.value
 
     override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.GetUSTopStoriesResponse = protoMergeImpl(other)
@@ -184,7 +148,7 @@ public data class GetUSTopStoriesResponse(
                         messageDescriptor = this@Companion::descriptor,
                         name = "error",
                         number = 2,
-                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.GetUSTopStoriesError.Companion),
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.ScoopError.Companion),
                         oneofMember = true,
                         jsonName = "error",
                         value = ai.wandering.scoop.v1.models.GetUSTopStoriesResponse::error
@@ -257,29 +221,6 @@ private fun GetUSTopStoriesData.Companion.decodeWithImpl(u: pbandk.MessageDecode
 }
 
 @pbandk.Export
-@pbandk.JsName("orDefaultForGetUSTopStoriesError")
-public fun GetUSTopStoriesError?.orDefault(): ai.wandering.scoop.v1.models.GetUSTopStoriesError = this ?: GetUSTopStoriesError.defaultInstance
-
-private fun GetUSTopStoriesError.protoMergeImpl(plus: pbandk.Message?): GetUSTopStoriesError = (plus as? GetUSTopStoriesError)?.let {
-    it.copy(
-        unknownFields = unknownFields + plus.unknownFields
-    )
-} ?: this
-
-@Suppress("UNCHECKED_CAST")
-private fun GetUSTopStoriesError.Companion.decodeWithImpl(u: pbandk.MessageDecoder): GetUSTopStoriesError {
-    var message = ""
-
-    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
-        when (_fieldNumber) {
-            1 -> message = _fieldValue as String
-        }
-    }
-
-    return GetUSTopStoriesError(message, unknownFields)
-}
-
-@pbandk.Export
 @pbandk.JsName("orDefaultForGetUSTopStoriesResponse")
 public fun GetUSTopStoriesResponse?.orDefault(): ai.wandering.scoop.v1.models.GetUSTopStoriesResponse = this ?: GetUSTopStoriesResponse.defaultInstance
 
@@ -304,7 +245,7 @@ private fun GetUSTopStoriesResponse.Companion.decodeWithImpl(u: pbandk.MessageDe
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
             1 -> type = GetUSTopStoriesResponse.Type.Data(_fieldValue as ai.wandering.scoop.v1.models.GetUSTopStoriesData)
-            2 -> type = GetUSTopStoriesResponse.Type.Error(_fieldValue as ai.wandering.scoop.v1.models.GetUSTopStoriesError)
+            2 -> type = GetUSTopStoriesResponse.Type.Error(_fieldValue as ai.wandering.scoop.v1.models.ScoopError)
         }
     }
 
