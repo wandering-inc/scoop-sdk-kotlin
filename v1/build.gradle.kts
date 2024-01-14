@@ -19,14 +19,14 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(libs.serialization.core)
-                implementation(libs.serialization.json)
+                api(libs.serialization.core)
+                api(libs.serialization.json)
                 api(libs.coroutines.core)
                 api(libs.ktor.core)
                 api(libs.ktor.serialization.json)
                 api(libs.ktor.serialization)
                 api(libs.ktor.negotiation)
-                implementation(libs.pbandk.runtime)
+                api(libs.pbandk.runtime)
             }
         }
     }
