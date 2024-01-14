@@ -4,7 +4,7 @@ package ai.wandering.scoop.v1.models
 
 @pbandk.Export
 public data class Scoop(
-    val stories: List<ai.wandering.scoop.v1.models.Story> = emptyList(),
+    val stories: List<ai.wandering.scoop.v1.models.PopulatedStory> = emptyList(),
     val title: String = "",
     val summary: String = "",
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
@@ -24,7 +24,7 @@ public data class Scoop(
                         messageDescriptor = this@Companion::descriptor,
                         name = "stories",
                         number = 1,
-                        type = pbandk.FieldDescriptor.Type.Repeated<ai.wandering.scoop.v1.models.Story>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.Story.Companion)),
+                        type = pbandk.FieldDescriptor.Type.Repeated<ai.wandering.scoop.v1.models.PopulatedStory>(valueType = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.PopulatedStory.Companion)),
                         jsonName = "stories",
                         value = ai.wandering.scoop.v1.models.Scoop::stories
                     )
@@ -73,13 +73,13 @@ private fun Scoop.protoMergeImpl(plus: pbandk.Message?): Scoop = (plus as? Scoop
 
 @Suppress("UNCHECKED_CAST")
 private fun Scoop.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Scoop {
-    var stories: pbandk.ListWithSize.Builder<ai.wandering.scoop.v1.models.Story>? = null
+    var stories: pbandk.ListWithSize.Builder<ai.wandering.scoop.v1.models.PopulatedStory>? = null
     var title = ""
     var summary = ""
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
-            1 -> stories = (stories ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<ai.wandering.scoop.v1.models.Story> }
+            1 -> stories = (stories ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<ai.wandering.scoop.v1.models.PopulatedStory> }
             2 -> title = _fieldValue as String
             3 -> summary = _fieldValue as String
         }

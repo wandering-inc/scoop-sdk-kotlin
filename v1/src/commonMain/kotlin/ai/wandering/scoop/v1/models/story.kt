@@ -215,6 +215,7 @@ public data class StoryAssocs(
     val skills: List<ai.wandering.scoop.v1.models.Skill> = emptyList(),
     val locations: List<ai.wandering.scoop.v1.models.Location> = emptyList(),
     val author: ai.wandering.scoop.v1.models.Author? = null,
+    val publication: ai.wandering.scoop.v1.models.Publication? = null,
     override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
 ) : pbandk.Message {
     override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.StoryAssocs = protoMergeImpl(other)
@@ -225,7 +226,7 @@ public data class StoryAssocs(
         override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.StoryAssocs = ai.wandering.scoop.v1.models.StoryAssocs.decodeWithImpl(u)
 
         override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.StoryAssocs> by lazy {
-            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.StoryAssocs, *>>(7)
+            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.StoryAssocs, *>>(8)
             fieldsList.apply {
                 add(
                     pbandk.FieldDescriptor(
@@ -295,6 +296,16 @@ public data class StoryAssocs(
                         type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.Author.Companion),
                         jsonName = "author",
                         value = ai.wandering.scoop.v1.models.StoryAssocs::author
+                    )
+                )
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "publication",
+                        number = 8,
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.Publication.Companion),
+                        jsonName = "publication",
+                        value = ai.wandering.scoop.v1.models.StoryAssocs::publication
                     )
                 )
             }
@@ -609,6 +620,7 @@ private fun StoryAssocs.protoMergeImpl(plus: pbandk.Message?): StoryAssocs = (pl
         skills = skills + plus.skills,
         locations = locations + plus.locations,
         author = author?.plus(plus.author) ?: plus.author,
+        publication = publication?.plus(plus.publication) ?: plus.publication,
         unknownFields = unknownFields + plus.unknownFields
     )
 } ?: this
@@ -622,6 +634,7 @@ private fun StoryAssocs.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Stor
     var skills: pbandk.ListWithSize.Builder<ai.wandering.scoop.v1.models.Skill>? = null
     var locations: pbandk.ListWithSize.Builder<ai.wandering.scoop.v1.models.Location>? = null
     var author: ai.wandering.scoop.v1.models.Author? = null
+    var publication: ai.wandering.scoop.v1.models.Publication? = null
 
     val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
         when (_fieldNumber) {
@@ -632,11 +645,12 @@ private fun StoryAssocs.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Stor
             5 -> skills = (skills ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<ai.wandering.scoop.v1.models.Skill> }
             6 -> locations = (locations ?: pbandk.ListWithSize.Builder()).apply { this += _fieldValue as kotlin.sequences.Sequence<ai.wandering.scoop.v1.models.Location> }
             7 -> author = _fieldValue as ai.wandering.scoop.v1.models.Author
+            8 -> publication = _fieldValue as ai.wandering.scoop.v1.models.Publication
         }
     }
 
     return StoryAssocs(pbandk.ListWithSize.Builder.fixed(tags), pbandk.ListWithSize.Builder.fixed(people), pbandk.ListWithSize.Builder.fixed(companies), pbandk.ListWithSize.Builder.fixed(industries),
-        pbandk.ListWithSize.Builder.fixed(skills), pbandk.ListWithSize.Builder.fixed(locations), author, unknownFields)
+        pbandk.ListWithSize.Builder.fixed(skills), pbandk.ListWithSize.Builder.fixed(locations), author, publication, unknownFields)
 }
 
 @pbandk.Export
