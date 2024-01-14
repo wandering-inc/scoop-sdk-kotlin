@@ -11,6 +11,9 @@ kotlin {
     androidTarget()
     jvm()
     applyDefaultHierarchyTemplate()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
     js()
 
     sourceSets {
