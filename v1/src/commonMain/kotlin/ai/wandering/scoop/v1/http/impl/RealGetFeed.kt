@@ -21,6 +21,6 @@ internal class RealGetFeed(private val client: HttpClient, private val bearerTok
     }
 
     companion object {
-        private const val ENDPOINT = "https://api.scoop.wandering.ai/v1/stories/top/global"
+        private const val ENDPOINT = "https://api.scoop.wandering.ai/v1/feed"
     }
 }
