@@ -521,6 +521,7 @@ public data class ServerError(
         public class Timeout(timeout: ai.wandering.scoop.v1.models.TimeoutError) : Error<ai.wandering.scoop.v1.models.TimeoutError>(timeout)
         public class DependencyFailure(dependencyFailure: ai.wandering.scoop.v1.models.DependencyFailureError) : Error<ai.wandering.scoop.v1.models.DependencyFailureError>(dependencyFailure)
         public class DataCorruption(dataCorruption: ai.wandering.scoop.v1.models.DataCorruptionError) : Error<ai.wandering.scoop.v1.models.DataCorruptionError>(dataCorruption)
+        public class NotFound(notFound: ai.wandering.scoop.v1.models.NotFoundError) : Error<ai.wandering.scoop.v1.models.NotFoundError>(notFound)
     }
 
     val internal: ai.wandering.scoop.v1.models.InternalServerError?
@@ -535,6 +536,8 @@ public data class ServerError(
         get() = (error as? Error.DependencyFailure)?.value
     val dataCorruption: ai.wandering.scoop.v1.models.DataCorruptionError?
         get() = (error as? Error.DataCorruption)?.value
+    val notFound: ai.wandering.scoop.v1.models.NotFoundError?
+        get() = (error as? Error.NotFound)?.value
 
     override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.ServerError = protoMergeImpl(other)
     override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.ServerError> get() = Companion.descriptor
@@ -544,7 +547,7 @@ public data class ServerError(
         override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.ServerError = ai.wandering.scoop.v1.models.ServerError.decodeWithImpl(u)
 
         override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.ServerError> by lazy {
-            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.ServerError, *>>(6)
+            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.ServerError, *>>(7)
             fieldsList.apply {
                 add(
                     pbandk.FieldDescriptor(
@@ -612,10 +615,57 @@ public data class ServerError(
                         value = ai.wandering.scoop.v1.models.ServerError::dataCorruption
                     )
                 )
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "not_found",
+                        number = 7,
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.NotFoundError.Companion),
+                        oneofMember = true,
+                        jsonName = "notFound",
+                        value = ai.wandering.scoop.v1.models.ServerError::notFound
+                    )
+                )
             }
             pbandk.MessageDescriptor(
                 fullName = "ai.wandering.scoop.v1.models.ServerError",
                 messageClass = ai.wandering.scoop.v1.models.ServerError::class,
+                messageCompanion = this,
+                fields = fieldsList
+            )
+        }
+    }
+}
+
+@pbandk.Export
+public data class NotFoundError(
+    val message: String = "",
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+    override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.NotFoundError = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.NotFoundError> get() = Companion.descriptor
+    override val protoSize: Int by lazy { super.protoSize }
+    public companion object : pbandk.Message.Companion<ai.wandering.scoop.v1.models.NotFoundError> {
+        public val defaultInstance: ai.wandering.scoop.v1.models.NotFoundError by lazy { ai.wandering.scoop.v1.models.NotFoundError() }
+        override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.NotFoundError = ai.wandering.scoop.v1.models.NotFoundError.decodeWithImpl(u)
+
+        override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.NotFoundError> by lazy {
+            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.NotFoundError, *>>(1)
+            fieldsList.apply {
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "message",
+                        number = 1,
+                        type = pbandk.FieldDescriptor.Type.Primitive.String(),
+                        jsonName = "message",
+                        value = ai.wandering.scoop.v1.models.NotFoundError::message
+                    )
+                )
+            }
+            pbandk.MessageDescriptor(
+                fullName = "ai.wandering.scoop.v1.models.NotFoundError",
+                messageClass = ai.wandering.scoop.v1.models.NotFoundError::class,
                 messageCompanion = this,
                 fields = fieldsList
             )
@@ -1274,6 +1324,8 @@ private fun ServerError.protoMergeImpl(plus: pbandk.Message?): ServerError = (pl
                 ServerError.Error.DependencyFailure(error.value + plus.error.value)
             error is ServerError.Error.DataCorruption && plus.error is ServerError.Error.DataCorruption ->
                 ServerError.Error.DataCorruption(error.value + plus.error.value)
+            error is ServerError.Error.NotFound && plus.error is ServerError.Error.NotFound ->
+                ServerError.Error.NotFound(error.value + plus.error.value)
             else ->
                 plus.error ?: error
         },
@@ -1293,10 +1345,34 @@ private fun ServerError.Companion.decodeWithImpl(u: pbandk.MessageDecoder): Serv
             4 -> error = ServerError.Error.Timeout(_fieldValue as ai.wandering.scoop.v1.models.TimeoutError)
             5 -> error = ServerError.Error.DependencyFailure(_fieldValue as ai.wandering.scoop.v1.models.DependencyFailureError)
             6 -> error = ServerError.Error.DataCorruption(_fieldValue as ai.wandering.scoop.v1.models.DataCorruptionError)
+            7 -> error = ServerError.Error.NotFound(_fieldValue as ai.wandering.scoop.v1.models.NotFoundError)
         }
     }
 
     return ServerError(error, unknownFields)
+}
+
+@pbandk.Export
+@pbandk.JsName("orDefaultForNotFoundError")
+public fun NotFoundError?.orDefault(): ai.wandering.scoop.v1.models.NotFoundError = this ?: NotFoundError.defaultInstance
+
+private fun NotFoundError.protoMergeImpl(plus: pbandk.Message?): NotFoundError = (plus as? NotFoundError)?.let {
+    it.copy(
+        unknownFields = unknownFields + plus.unknownFields
+    )
+} ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun NotFoundError.Companion.decodeWithImpl(u: pbandk.MessageDecoder): NotFoundError {
+    var message = ""
+
+    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+            1 -> message = _fieldValue as String
+        }
+    }
+
+    return NotFoundError(message, unknownFields)
 }
 
 @pbandk.Export
