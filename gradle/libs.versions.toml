@@ -5,7 +5,7 @@ kotlin = "1.9.21"
 ktor = "2.3.7"
 ksp = "1.9.21-1.0.15"
 pbandk-runtime = "0.14.2"
-scoop = "1.0.0-alpha04"
+scoop = "1.0.0-alpha05"
 serialization = "1.5.1"
 maven-publish-plugin = "0.23.2"
 

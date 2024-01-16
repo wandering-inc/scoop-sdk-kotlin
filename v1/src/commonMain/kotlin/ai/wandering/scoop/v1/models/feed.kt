@@ -108,6 +108,100 @@ public data class GetFeedArgs(
 }
 
 @pbandk.Export
+public data class GetFeedResponse(
+    val type: Type<*>? = null,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+    public sealed class Type<V>(value: V) : pbandk.Message.OneOf<V>(value) {
+        public class Success(success: ai.wandering.scoop.v1.models.GetFeedSuccessResponse) : Type<ai.wandering.scoop.v1.models.GetFeedSuccessResponse>(success)
+        public class Error(error: ai.wandering.scoop.v1.models.ScoopError) : Type<ai.wandering.scoop.v1.models.ScoopError>(error)
+    }
+
+    val success: ai.wandering.scoop.v1.models.GetFeedSuccessResponse?
+        get() = (type as? Type.Success)?.value
+    val error: ai.wandering.scoop.v1.models.ScoopError?
+        get() = (type as? Type.Error)?.value
+
+    override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.GetFeedResponse = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetFeedResponse> get() = Companion.descriptor
+    override val protoSize: Int by lazy { super.protoSize }
+    public companion object : pbandk.Message.Companion<ai.wandering.scoop.v1.models.GetFeedResponse> {
+        public val defaultInstance: ai.wandering.scoop.v1.models.GetFeedResponse by lazy { ai.wandering.scoop.v1.models.GetFeedResponse() }
+        override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.GetFeedResponse = ai.wandering.scoop.v1.models.GetFeedResponse.decodeWithImpl(u)
+
+        override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetFeedResponse> by lazy {
+            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.GetFeedResponse, *>>(2)
+            fieldsList.apply {
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "success",
+                        number = 1,
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.GetFeedSuccessResponse.Companion),
+                        oneofMember = true,
+                        jsonName = "success",
+                        value = ai.wandering.scoop.v1.models.GetFeedResponse::success
+                    )
+                )
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "error",
+                        number = 2,
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.ScoopError.Companion),
+                        oneofMember = true,
+                        jsonName = "error",
+                        value = ai.wandering.scoop.v1.models.GetFeedResponse::error
+                    )
+                )
+            }
+            pbandk.MessageDescriptor(
+                fullName = "ai.wandering.scoop.v1.models.GetFeedResponse",
+                messageClass = ai.wandering.scoop.v1.models.GetFeedResponse::class,
+                messageCompanion = this,
+                fields = fieldsList
+            )
+        }
+    }
+}
+
+@pbandk.Export
+public data class GetFeedSuccessResponse(
+    val feed: ai.wandering.scoop.v1.models.Feed? = null,
+    override val unknownFields: Map<Int, pbandk.UnknownField> = emptyMap()
+) : pbandk.Message {
+    override operator fun plus(other: pbandk.Message?): ai.wandering.scoop.v1.models.GetFeedSuccessResponse = protoMergeImpl(other)
+    override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetFeedSuccessResponse> get() = Companion.descriptor
+    override val protoSize: Int by lazy { super.protoSize }
+    public companion object : pbandk.Message.Companion<ai.wandering.scoop.v1.models.GetFeedSuccessResponse> {
+        public val defaultInstance: ai.wandering.scoop.v1.models.GetFeedSuccessResponse by lazy { ai.wandering.scoop.v1.models.GetFeedSuccessResponse() }
+        override fun decodeWith(u: pbandk.MessageDecoder): ai.wandering.scoop.v1.models.GetFeedSuccessResponse = ai.wandering.scoop.v1.models.GetFeedSuccessResponse.decodeWithImpl(u)
+
+        override val descriptor: pbandk.MessageDescriptor<ai.wandering.scoop.v1.models.GetFeedSuccessResponse> by lazy {
+            val fieldsList = ArrayList<pbandk.FieldDescriptor<ai.wandering.scoop.v1.models.GetFeedSuccessResponse, *>>(1)
+            fieldsList.apply {
+                add(
+                    pbandk.FieldDescriptor(
+                        messageDescriptor = this@Companion::descriptor,
+                        name = "feed",
+                        number = 1,
+                        type = pbandk.FieldDescriptor.Type.Message(messageCompanion = ai.wandering.scoop.v1.models.Feed.Companion),
+                        jsonName = "feed",
+                        value = ai.wandering.scoop.v1.models.GetFeedSuccessResponse::feed
+                    )
+                )
+            }
+            pbandk.MessageDescriptor(
+                fullName = "ai.wandering.scoop.v1.models.GetFeedSuccessResponse",
+                messageClass = ai.wandering.scoop.v1.models.GetFeedSuccessResponse::class,
+                messageCompanion = this,
+                fields = fieldsList
+            )
+        }
+    }
+}
+
+@pbandk.Export
 @pbandk.JsName("orDefaultForFeed")
 public fun Feed?.orDefault(): ai.wandering.scoop.v1.models.Feed = this ?: Feed.defaultInstance
 
@@ -160,4 +254,60 @@ private fun GetFeedArgs.Companion.decodeWithImpl(u: pbandk.MessageDecoder): GetF
     }
 
     return GetFeedArgs(count, direction, cursor, unknownFields)
+}
+
+@pbandk.Export
+@pbandk.JsName("orDefaultForGetFeedResponse")
+public fun GetFeedResponse?.orDefault(): ai.wandering.scoop.v1.models.GetFeedResponse = this ?: GetFeedResponse.defaultInstance
+
+private fun GetFeedResponse.protoMergeImpl(plus: pbandk.Message?): GetFeedResponse = (plus as? GetFeedResponse)?.let {
+    it.copy(
+        type = when {
+            type is GetFeedResponse.Type.Success && plus.type is GetFeedResponse.Type.Success ->
+                GetFeedResponse.Type.Success(type.value + plus.type.value)
+            type is GetFeedResponse.Type.Error && plus.type is GetFeedResponse.Type.Error ->
+                GetFeedResponse.Type.Error(type.value + plus.type.value)
+            else ->
+                plus.type ?: type
+        },
+        unknownFields = unknownFields + plus.unknownFields
+    )
+} ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun GetFeedResponse.Companion.decodeWithImpl(u: pbandk.MessageDecoder): GetFeedResponse {
+    var type: GetFeedResponse.Type<*>? = null
+
+    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+            1 -> type = GetFeedResponse.Type.Success(_fieldValue as ai.wandering.scoop.v1.models.GetFeedSuccessResponse)
+            2 -> type = GetFeedResponse.Type.Error(_fieldValue as ai.wandering.scoop.v1.models.ScoopError)
+        }
+    }
+
+    return GetFeedResponse(type, unknownFields)
+}
+
+@pbandk.Export
+@pbandk.JsName("orDefaultForGetFeedSuccessResponse")
+public fun GetFeedSuccessResponse?.orDefault(): ai.wandering.scoop.v1.models.GetFeedSuccessResponse = this ?: GetFeedSuccessResponse.defaultInstance
+
+private fun GetFeedSuccessResponse.protoMergeImpl(plus: pbandk.Message?): GetFeedSuccessResponse = (plus as? GetFeedSuccessResponse)?.let {
+    it.copy(
+        feed = feed?.plus(plus.feed) ?: plus.feed,
+        unknownFields = unknownFields + plus.unknownFields
+    )
+} ?: this
+
+@Suppress("UNCHECKED_CAST")
+private fun GetFeedSuccessResponse.Companion.decodeWithImpl(u: pbandk.MessageDecoder): GetFeedSuccessResponse {
+    var feed: ai.wandering.scoop.v1.models.Feed? = null
+
+    val unknownFields = u.readMessage(this) { _fieldNumber, _fieldValue ->
+        when (_fieldNumber) {
+            1 -> feed = _fieldValue as ai.wandering.scoop.v1.models.Feed
+        }
+    }
+
+    return GetFeedSuccessResponse(feed, unknownFields)
 }
